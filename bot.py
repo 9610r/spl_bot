@@ -98,7 +98,7 @@ async def on_message(message):
 		if client.user != message.author:
 			# メッセージを書きます
 			m = saikoro_choice
-			await client.send_message(message.channel, m.format(message.author.mention))
+			await client.send_message(message.channel, '{}{}'.format(m,message.author.mention))
 
 	if client.user.id in message.content:
 		await client.send_message(message.channel, '{} 呼んだか？'.format(message.author.mention))
