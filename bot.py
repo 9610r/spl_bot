@@ -93,11 +93,11 @@ async def on_message(message):
 
 	if message.content.startswith("サイコロ"):
 		saikoro = ['1','2','3','4','5','6']
-		saikoro_choice = random.choice(saikoro)
+		saikoro_choice = choice(saikoro)
 		if client.user != message.author:
 			# メッセージを書きます
 			m = saikoro_choice
-			await client.send_message(message.channel, m)
+			await client.send_message(message.channel, m.format(message.author.mention))
 
 	if client.user.id in message.content:
 		await client.send_message(message.channel, '{} 呼んだか？'.format(message.author.mention))
