@@ -25,7 +25,7 @@ def getStageInfo(index=0):
 	dic = dic['result'][0]
 
 	if index < 5:
-		return '**{}**で__{}__と__{}__だぞ'.format(dic['rule'],dic['maps'][0],dic['maps'][1])
+		return '```ルール:**{}**\nステージ:__{}__、__{}__```'.format(dic['rule'],dic['maps'][0],dic['maps'][1])
 	else:
 		return '次のガチマは__{}__で、リグマは__{}__だ'.format(dic['result'][2]['gachi'][0]['rule'],dic['result'][3]['league'][0]['rule'])
 
@@ -75,7 +75,7 @@ async def on_message(message):
 		voice_users= [ p_list[i].display_name for i in range(len(p_list))]
 		rand_buki = randBuki(buki_list,voice_users)
 		for i in rand_buki.keys():
-			m = '{}:{}'.format(i,rand_buki[i])
+			m = '```{}:{}```'.format(i,rand_buki[i])
 			await client.send_message(message.channel, m)
 
 	if message.content.startswith('おはよう'):
