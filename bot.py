@@ -141,7 +141,7 @@ async def on_message(message):
 			await client.send_message(message.channel, reply)
 '''
 
-client.run("NDkyMTM0Mjk1NjUwMDQxODU3.DoxzOQ.YcKNolloD-1X0bh8GOVe1GkiUOg")
+client.run("NDY3MTgxMTU3ODcyNjk3MzQ0.Do9LpQ.GXRLzbKePmAbVYCo-4pnsl2irZY")
 """
 if __name__ == '__mian__':
 	main()
