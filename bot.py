@@ -19,12 +19,7 @@ def getStageInfo(index=0):
 	#now or next
 	url = "https://spla2.yuu26.com/" + links[index]
 	response = requests.get(url,headers=headers)
-
-	#response.json => response.dict
 	dic = json.loads(response.text)
-	#dic2 = json.loads(response.text)
-	#dic_gachi = dic['result']['gachi']
-	#dic_league = dic['result']['league']
 	dic = dic['result'][0]
 
 	if index < 2:
@@ -81,8 +76,10 @@ async def on_message(message):
 		voice_users= [ p_list[i].display_name for i in range(len(p_list))]
 		rand_buki = randBuki(buki_list,voice_users)
 		for i in rand_buki.keys():
-			m = '{}:{}'.format(i,rand_buki[i])
-			await client.send_message(message.channel, m)
+			mbuki = '{}:{}'.format(i,rand_buki[i])
+			msg = discord.Embed(title='ブキを決めるよ',description=mbuki, colour=0xffffff)
+			msg.set_thumbnail(url="https://gashapon.jp/splatoon/images/shoplist/bg_ink_shoplist01.png")
+			await client.send_message(message.channel, embed=msg)
 
 	if message.content.startswith('おはよう'):
 		# 送り主がBotだった場合反応しない
