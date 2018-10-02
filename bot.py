@@ -81,6 +81,12 @@ async def on_message(message):
 			m = "おはよう、" + message.author.name + "！"
 			# メッセージが送られてきたチャンネルへメッセージ送信
 			await client.send_message(message.channel, m)
+	elif message.content.startswith('help'):
+		# 送り主がBotだった場合反応しない
+		if client.user != message.author:
+			m = "これを見てね！\n" +"https://qiita.com/IkayomeCh/private/5c3ada164e5f2af9d88a"
+			# メッセージが送られてきたチャンネルへメッセージ送信
+			await client.send_message(message.channel, m)
 
 	elif message.content.startswith("サイコロ"):
 		saikoro_choice = choice(['1','2','3','4','5','6'])
