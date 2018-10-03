@@ -3,6 +3,7 @@ import json
 import discord
 import requests
 from random import randint,choice
+from datetime import datetime
 #-*- -*- -*- -*- -*- -*- -*- -*- -*- -*- -*- -*- -*- -*- -*- -*- -*- -*- -*- -*
 
 def getStageInfo(index=0):
@@ -43,10 +44,8 @@ def getStageInfo(index=0):
 def randBuki(buki_list, users):
 	len_u = len(users)
 	return {i:choice(buki_list) for i in users}
-
 #clientオブジェクトの生成
 client = discord.Client()
-
 with open('buki.csv', encoding='UTF-8') as f:
 	buki_list = f.readlines()
 
@@ -130,11 +129,17 @@ async def on_message(message):
 		dic = dic['result'][0]
 
 		time_st,time_ed = dic['start'],dic['end']
-		time_st = time_st.replace('T',' ').replace('-','/')[5:16]
-		time_ed = time_ed.replace('T',' ').replace('-','/')[5:16]
-		time = time_st+"～"+time_ed
-
-		msg = discord.Embed(title='サーモンラン', description=time,colour=0xFB7E00)
+		time_st = time_st.replace('T',' ')[5:16]
+		time_stc = time_st.replace('-',' ').replace(':',' ').replace(' ','')
+		time_ed = time_ed.replace('T',' ')[5:16]
+		time_edc = time_ed.replace('-',' ').replace(':',' ').replace(' ','')
+		time = time_st.replace('-','/')+"～"+time_ed.replace('-','/')
+		nowtime = datetime.now().strftime("%m%d%H%M")
+		if nowtime > time_stc and nowtime < time_edc:
+			nowinfo = "≪開催中！≫"
+		else:
+			nowinfo = "≪シフト予定≫"
+		msg = discord.Embed(title='サーモンラン '+nowinfo, description=time,colour=0xFB7E00)
 		msg.set_thumbnail(url=dic['stage']['image'])
 		msg.add_field(name=dic['stage']['name'],value=dic['weapons'][0]['name']+'\n'+dic['weapons'][1]['name']+'\n'+dic['weapons'][2]['name']+'\n'+dic['weapons'][3]['name'], inline=True)
 		await client.send_message(message.channel, embed=msg)
