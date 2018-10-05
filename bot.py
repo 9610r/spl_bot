@@ -207,13 +207,11 @@ async def on_message(message):
 						await client.edit_message(msg, '募集終了\n'+ '\n'.join(frelist))
 						#await CLIENT.unpin_message(msg)
 						break
-
 				await client.remove_reaction(msg, target_reaction.reaction.emoji, target_reaction.user)
-				#bot以外のユーザーがつけたリアクションを消す
+				#ユーザーがつけたリアクションを消す
 				#==============================================================
 		else:
 			await client.edit_message(msg, '募集終了\n'+ '\n'.join(frelist))
-
 
 
 
