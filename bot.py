@@ -205,7 +205,7 @@ async def on_message(message):
 
 				elif target_reaction.reaction.emoji == '✖':
 						await client.edit_message(msg, '募集終了\n'+ '\n'.join(frelist))
-						#await CLIENT.unpin_message(msg)
+						await CLIENT.unpin_message(msg)
 						break
 				#await client.remove_reaction(msg, target_reaction.reaction.emoji, target_reaction.user)
 				#ユーザーがつけたリアクションを消す
