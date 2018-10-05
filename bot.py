@@ -156,7 +156,7 @@ async def on_message(message):
 
 			"""メンバー募集.rect@数字"""
 	elif message.content.startswith(".rect"):
-		mcount = int(message.content[6])
+		mcount = int(message.content[6:len(message.content)])
 		text= "あと{}人 募集中\n"
 		revmsg = text.format(mcount)
 		#friend_list 押した人のList
@@ -213,6 +213,8 @@ async def on_message(message):
 				#==============================================================
 		else:
 			await client.edit_message(msg, '募集終了\n'+ '\n'.join(frelist))
+
+
 
 
 client.run("NDY3MTgxMTU3ODcyNjk3MzQ0.Do9LpQ.GXRLzbKePmAbVYCo-4pnsl2irZY")
