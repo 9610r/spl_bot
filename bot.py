@@ -165,7 +165,7 @@ async def on_message(message):
 		if client.user != message.author:
 			await client.send_message(message.channel, reply)
 
-    """メンバー募集 (.rect 内容 @数字)"""
+			"""メンバー募集 (.rect 内容 @数字)"""
 	elif message.content.startswith(".rect"):
         m = re.split(' ', message.content)
         # ['one', 'two', 'one', 'two']
