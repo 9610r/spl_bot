@@ -65,9 +65,13 @@ async def on_voice_state_update(before, after):
         #print(getserver.voice_channel)
 
         if(before.voice_channel is None):
-            print(nowtime + "　に "+ after.name + "　が　"+ after.voice_channel.name + " に参加しました。")
+            intext=nowtime + "　に "+ after.name + "　が　"+ after.voice_channel.name + " に参加しました。"
+			vcchannel = client.get_channel('499906318308474890')
+	        await client.send_message(vcchannel, intext)
         elif(after.voice_channel is None):
-            print(nowtime + "　に "+ before.name + "　が　"+ before.voice_channel.name + " から退出しました。")
+            outtext=nowtime + "　に "+ before.name + "　が　"+ before.voice_channel.name + " から退出しました。"
+			vcchannel = client.get_channel('499906318308474890')
+			await client.send_message(vcchannel, outtext)
 
 
 @client.event
@@ -181,7 +185,7 @@ async def on_message(message):
 		await client.add_reaction(msg, '\u21a9')
 		await client.add_reaction(msg, '⏫')
 		await client.add_reaction(msg, '📌')
-		await client.pin_message(msg)
+		#await client.pin_message(msg)
 
 		#ログ監視
 		botlog = "{} type {}to{}".format(message.author.name,message.content,message.channel.id)
@@ -221,7 +225,7 @@ async def on_message(message):
 
 				elif target_reaction.reaction.emoji == '📌':
 					await client.edit_message(msg, '募集終了\n'+ '\n'.join(frelist))
-					await client.unpin_message(msg)
+					#await client.unpin_message(msg)
 					break
 
 					#await client.remove_reaction(msg, target_reaction.reaction.emoji, target_reaction.user)
