@@ -223,7 +223,7 @@ async def on_message(message):
                     await client.unpin_message(msg)
                     break
 
-                await client.remove_reaction(msg, target_reaction.reaction.emoji, target_reaction.user)
+                #await client.remove_reaction(msg, target_reaction.reaction.emoji, target_reaction.user)
 				#ユーザーがつけたリアクションを消す※権限によってはエラー
 				#==============================================================
         else:
