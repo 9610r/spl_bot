@@ -57,6 +57,17 @@ async def on_ready():
 	await client.change_presence(game=discord.Game(name="Splatoon2"))
 	print('------')
 
+@client.event
+async def on_voice_state_update(before, after):
+    if after.server.id == '347952320052592670':
+        nowtime = datetime.now().strftime("%m/%d-%H:%M")
+        #print(getserver.voice_channel)
+
+        if(before.voice_channel is None):
+            print(nowtime + "　に "+ after.name + "　が　"+ after.voice_channel.name + " に参加しました。")
+        elif(after.voice_channel is None):
+            print(nowtime + "　に "+ before.name + "　が　"+ before.voice_channel.name + " から退出しました。")
+
 
 @client.event
 async def on_message(message):
@@ -154,65 +165,74 @@ async def on_message(message):
 		if client.user != message.author:
 			await client.send_message(message.channel, reply)
 
-			"""メンバー募集.rect@数字"""
+    """メンバー募集 (.rect 内容 @数字)"""
 	elif message.content.startswith(".rect"):
-		mcount = int(message.content[6:len(message.content)])
-		text= "あと{}人 募集中\n"
-		revmsg = text.format(mcount)
-		#friend_list 押した人のList
-		frelist = []
-		msg = await client.send_message(message.channel, revmsg)
+        m = re.split(' ', message.content)
+        # ['one', 'two', 'one', 'two']
+        mcount = int(m[2][1:])
+        text= m[1]+"あと{}人 募集中\n"
+        revmsg = text.format(mcount)
+        #friend_list 押した人のList
+        frelist = []
+        msg = await client.send_message(message.channel, revmsg)
 
-		#投票の欄
-		await client.add_reaction(msg, '◀')
-		await client.add_reaction(msg, '⏫')
+        #投票の欄
+        await client.add_reaction(msg, '\u21a9')
+        await client.add_reaction(msg, '⏫')
+        await client.add_reaction(msg, '📌')
+        await client.pin_message(msg)
 
-		#リアクションをチェックする
-		while len(frelist) < int(message.content[6:len(message.content)]):
-			target_reaction = await client.wait_for_reaction(message=msg)
-			#発言したユーザが同一でない場合 真
-			if target_reaction.user != msg.author:
-				#==============================================================
-				#押された絵文字が既存のものの場合 >> 左　del
-				if target_reaction.reaction.emoji == '◀':
-					#==========================================================
-					#◀のリアクションに追加があったら反応 frelistにuser.nameがあった場合　真
-					if target_reaction.user.name in frelist:
-						frelist.remove(target_reaction.user.name)
-						mcount += 1
-						#リストから名前削除
-						#for mslist in frelist:
-						await client.edit_message(msg, text.format(mcount) +
-														'\n'.join(frelist))
-							#メッセージを書き換え
-							#print('del {}'.format(mglist))
+        #ログ監視
+        botlog = "{} type {}to{}".format(message.author.name,message.content,message.channel.id)
+        devchannel = client.get_channel('499066973540450305')
+        await client.send_message(devchannel, botlog)
 
-					else:
-						pass
+        #リアクションをチェックする
+        while len(frelist) < int(m[2][1:]):
+            target_reaction = await client.wait_for_reaction(message=msg)
+            #発言したユーザが同一でない場合 真
+            if target_reaction.user != msg.author:
+                #==============================================================
+                #押された絵文字が既存のものの場合 >> 左　del
+                if target_reaction.reaction.emoji == '\u21a9':
+                    #==========================================================
+                    #◀のリアクションに追加があったら反応 frelistにuser.nameがあった場合　真
+                    if target_reaction.user.name in frelist:
+                        frelist.remove(target_reaction.user.name)
+                        mcount += 1
+                        #リストから名前削除
+                        await client.edit_message(msg, text.format(mcount) +'\n'.join(frelist))
+                        #メッセージを書き換え
+
+                    else:
+                        pass
 				#==============================================================
 				#押された絵文字が既存のものの場合　>> 右　add
-				elif target_reaction.reaction.emoji == '⏫':
-					if target_reaction.user.name in frelist:
-						pass
+                elif target_reaction.reaction.emoji == '⏫':
+                    if target_reaction.user.name in frelist:
+                        pass
 
-					else:
-						frelist.append(target_reaction.user.name)
-						#リストに名前追加
-						mcount = mcount - 1
-						await client.edit_message(msg, text.format(mcount) +
-														'\n'.join(frelist))
+                    else:
+                        frelist.append(target_reaction.user.name)
+                        #リストに名前追加
+                        mcount = mcount - 1
+                        await client.edit_message(msg, text.format(mcount) +'\n'.join(frelist))
 
+                elif target_reaction.reaction.emoji == '📌':
+                    await client.edit_message(msg, '募集終了\n'+ '\n'.join(frelist))
+                    await client.unpin_message(msg)
+                    break
 
-				elif target_reaction.reaction.emoji == '✖':
-						await client.edit_message(msg, '募集終了\n'+ '\n'.join(frelist))
-						#await CLIENT.unpin_message(msg)
-						break
-				#await client.remove_reaction(msg, target_reaction.reaction.emoji, target_reaction.user)
-				#ユーザーがつけたリアクションを消す
+                await client.remove_reaction(msg, target_reaction.reaction.emoji, target_reaction.user)
+				#ユーザーがつけたリアクションを消す※権限によってはエラー
 				#==============================================================
-		else:
-			await client.edit_message(msg, '募集終了\n'+ '\n'.join(frelist))
+        else:
+            await client.edit_message(msg, '募集終了\n'+ '\n'.join(frelist))
 
-
+    elif message.content.startswith(".devmsg"):
+        dvls = re.split(' ', message.content)
+        targetchan = client.get_channel(dvls[2])
+        dvms = "[管理者メッセージ]"+dvls[1]
+        await client.send_message(targetchan, dvms)
 
 client.run("NDY3MTgxMTU3ODcyNjk3MzQ0.Dph_Ug.lzzPCz-BzLASqYUh7G61yOmVEC4")
