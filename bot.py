@@ -2,6 +2,7 @@
 import json
 import discord
 import requests
+import re
 from random import randint,choice
 from datetime import datetime
 #-*- -*- -*- -*- -*- -*- -*- -*- -*- -*- -*- -*- -*- -*- -*- -*- -*- -*- -*- -*
