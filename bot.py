@@ -68,7 +68,7 @@ async def on_voice_state_update(before, after):
 			intext=nowtime + "　に "+ after.name + "　が　"+ after.voice_channel.name + " に参加しました。"
 			vcchannel = client.get_channel('499906318308474890')
 			await client.send_message(vcchannel, intext)
-        elif(after.voice_channel is None):
+		elif(after.voice_channel is None):
 			outtext=nowtime + "　に "+ before.name + "　が　"+ before.voice_channel.name + " から退出しました。"
 			vcchannel = client.get_channel('499906318308474890')
 			await client.send_message(vcchannel, outtext)
