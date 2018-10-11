@@ -231,8 +231,8 @@ async def on_message(message):
 
 	elif message.content.startswith(".devmsg"):
 		dvls = re.split(' ', message.content)
-        targetchan = client.get_channel(dvls[2])
-        dvms = "[管理者メッセージ]"+dvls[1]
-        await client.send_message(targetchan, dvms)
+		targetchan = client.get_channel(dvls[2])
+		dvms = "[管理者メッセージ]"+dvls[1]
+		await client.send_message(targetchan, dvms)
 
 client.run("NDY3MTgxMTU3ODcyNjk3MzQ0.Dph_Ug.lzzPCz-BzLASqYUh7G61yOmVEC4")
