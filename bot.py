@@ -63,14 +63,15 @@ async def on_voice_state_update(before, after):
 	if after.server.id == '347952320052592670':
 		nowtime = datetime.datetime.utcnow()
 		nowtime = nowtime + datetime.timedelta(hours=9)
+		jptime = nowtime.strftime("%m/%d-%H:%M")
 		#print(getserver.voice_channel)
 		vcchannel = client.get_channel('499906318308474890')
 
 		if(before.voice_channel is None):
-			jointext=nowtime + "に"+ after.name + "　が　"+ after.voice_channel.name + " に参加しました。"
+			jointext=jptime + "に"+ after.name + "　が　"+ after.voice_channel.name + " に参加しました。"
 			await client.send_message(vcchannel, jointext)
 		elif(after.voice_channel is None):
-			outtext=nowtime + "に"+ before.name + "　が　"+ before.voice_channel.name + " から退出しました。"
+			outtext=jptime + "に"+ before.name + "　が　"+ before.voice_channel.name + " から退出しました。"
 			await client.send_message(vcchannel, outtext)
 
 @client.event
