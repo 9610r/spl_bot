@@ -61,9 +61,14 @@ async def on_ready():
 @client.event
 async def on_voice_state_update(before, after):
 	if after.server.id == '347952320052592670':
+<<<<<<< HEAD
 		nowtime = datetime.now().strftime("%m/%d-%H:%M") + datetime.timedelta(hours=9)
 		#print(getserver.voice_channel)
 		vcchannel = client.get_channel('499906318308474890')
+=======
+		nowtime = datetime.now().strftime("%m/%d-%H:%M")
+		#print(getserver.voice_channel)
+>>>>>>> f98cdb79ee7203c1d1c5b127d05e3f48050374f4
 
 		if(before.voice_channel is None):
 			jointext=nowtime + "　に "+ after.name + "　が　"+ after.voice_channel.name + " に参加しました。"
