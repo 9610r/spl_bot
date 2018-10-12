@@ -4,7 +4,7 @@ import discord
 import requests
 import re
 from random import randint,choice
-from datetime import datetime
+import datetime
 #-*- -*- -*- -*- -*- -*- -*- -*- -*- -*- -*- -*- -*- -*- -*- -*- -*- -*- -*- -*
 
 def getStageInfo(index=0):
@@ -61,8 +61,8 @@ async def on_ready():
 @client.event
 async def on_voice_state_update(before, after):
 	if after.server.id == '347952320052592670':
-		nowtime = datetime.utcnow()
-		nowtime = nowtime + timedelta(hours=9)
+		nowtime = datetime.datetime.utcnow()
+		nowtime = nowtime + datetime.delta(hours=9)
 		#print(getserver.voice_channel)
 		vcchannel = client.get_channel('499906318308474890')
 
@@ -149,7 +149,7 @@ async def on_message(message):
 		time_ed = time_ed.replace('T',' ')[5:16]
 		time_edc = time_ed.replace('-',' ').replace(':',' ').replace(' ','')
 		time = time_st.replace('-','/')+"～"+time_ed.replace('-','/')
-		nowtime = datetime.now().strftime("%m%d%H%M")
+		nowtime = datetime.datetime.now().strftime("%m%d%H%M")
 		if nowtime > time_stc and nowtime < time_edc:
 			nowinfo = "≪開催中！≫"
 		else:
