@@ -61,7 +61,7 @@ async def on_ready():
 @client.event
 async def on_voice_state_update(before, after):
 	if after.server.id == '347952320052592670':
-		nowtime = datetime.datetime.utcnow()
+		nowtime = datetime.utcnow()
 		nowtime = nowtime + timedelta(hours=9)
 		#print(getserver.voice_channel)
 		vcchannel = client.get_channel('499906318308474890')
