@@ -84,7 +84,7 @@ async def on_voice_state_update(before, after):
 async def on_message(message):
 	#"random_buki"とチャットに入力があった場合反応
 	'''ランダム武器'''
-	if message.content.startswith('random_buki'):
+	if message.content.startswith('.random'):
 		voice_channel = discord.utils.get(message.server.channels, id=message.author.voice.voice_channel.id)
 		p_list = voice_channel.voice_members
 		voice_users= [ p_list[i].display_name for i in range(len(p_list))]
@@ -135,11 +135,11 @@ async def on_message(message):
 		m = getStageInfo(3)
 		await client.send_message(message.channel, embed=m)
 
-	elif message.content.startswith(""):
+	elif message.content.startswith(".nawabari"):
 		m = getStageInfo(4)
 		await client.send_message(message.channel, embed=m)
 
-	elif message.content.startswith("次のナワバリ"):
+	elif message.content.startswith(".nawabari_next"):
 		m = getStageInfo(5)
 		await client.send_message(message.channel, embed=m)
 
