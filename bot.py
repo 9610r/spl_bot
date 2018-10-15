@@ -60,12 +60,12 @@ async def on_ready():
 
 @client.event
 async def on_voice_state_update(before, after):
-	if after.server.id == '347952320052592670':
+	if after.server.id == LOOK_SERVER_ID:
 		nowtime = datetime.datetime.utcnow()
 		nowtime = nowtime + datetime.timedelta(hours=9)
-		jptime = nowtime.strftime("%m/%d-%H:%M")
+		nowtime = nowtime.strftime("%m/%d-%H:%M")
 		#print(getserver.voice_channel)
-		vcchannel = client.get_channel('499906318308474890')
+		vcchannel = client.get_channel(LOG_CHANNEL_ID)
 
 		if(before.voice_channel is None):
 			jointext=jptime + "に"+ after.name + "　が　"+ after.voice_channel.name + " に参加しました。"
@@ -187,9 +187,9 @@ async def on_message(message):
 		await client.add_reaction(msg, '📌')
 		#await client.pin_message(msg)
 
-		#ログ監視
+		#serverログ監視
 		botlog = "{} type {}to{}".format(message.author.name,message.content,message.channel.id)
-		devchannel = client.get_channel('499066973540450305')
+		devchannel = client.get_channel(RECT_CHANNEL_ID)
 		await client.send_message(devchannel, botlog)
 
 		#リアクションをチェックする
@@ -240,4 +240,4 @@ async def on_message(message):
 		dvms = "[管理者メッセージ]"+dvls[1]
 		await client.send_message(targetchan, dvms)
 
-client.run("NDY3MTgxMTU3ODcyNjk3MzQ0.Dph_Ug.lzzPCz-BzLASqYUh7G61yOmVEC4")
+client.run(DISCORD_TOKEN)
