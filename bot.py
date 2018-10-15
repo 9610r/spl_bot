@@ -5,7 +5,13 @@ import requests
 import re
 from random import randint,choice
 import datetime
+import os
 #-*- -*- -*- -*- -*- -*- -*- -*- -*- -*- -*- -*- -*- -*- -*- -*- -*- -*- -*- -*
+
+DISCORD_TOKEN = os.environ["DISCORD_TOKEN"]
+LOG_CHANNEL_ID = os.environ["LOG_CHANNEL_ID"]
+LOOK_SERVER_ID = os.environ["LOOK_SERVER_ID"]
+RECT_CHANNEL_ID = os.environ["RECT_CHANNEL_ID"]
 
 def getStageInfo(index=0):
 	'''ステージ情報'''
@@ -113,23 +119,23 @@ async def on_message(message):
 	elif client.user.id in message.content:
 		await client.send_message(message.channel, '{} 呼んだか？'.format(message.author.mention))
 
-	elif message.content.startswith('ガチマ'):
+	elif message.content.startswith('.gachi'):
 		m = getStageInfo(0)
 		await client.send_message(message.channel, embed=m)
 
-	elif message.content.startswith("次のガチマ"):
+	elif message.content.startswith(".gachi_next"):
 		m = getStageInfo(1)
 		await client.send_message(message.channel, embed=m)
 
-	elif message.content.startswith("リグマ"):
+	elif message.content.startswith(".league"):
 		m = getStageInfo(2)
 		await client.send_message(message.channel, embed=m)
 
-	elif message.content.startswith("次のリグマ"):
+	elif message.content.startswith(".league_next"):
 		m = getStageInfo(3)
 		await client.send_message(message.channel, embed=m)
 
-	elif message.content.startswith("ナワバリ"):
+	elif message.content.startswith(""):
 		m = getStageInfo(4)
 		await client.send_message(message.channel, embed=m)
 
