@@ -158,7 +158,7 @@ async def on_message(message):
 		time = time_st.replace('-','/')+"～"+time_ed.replace('-','/')
 		nowtime = datetime.datetime.now().strftime("%m%d%H%M")
 		if nowtime > time_stc and nowtime < time_edc:
-			nowinfo = "≪開催中！≫"
+			nowinfo = "≪開催中！!≫"
 		else:
 			nowinfo = "≪シフト予定≫"
 		msg = discord.Embed(title='サーモンラン '+nowinfo, description=time,colour=0xFB7E00)
