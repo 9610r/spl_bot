@@ -123,7 +123,7 @@ async def on_message(message):
 		m = getStageInfo(0)
 		await client.send_message(message.channel, embed=m)
 
-	elif message.content.startswith(".gachi_next"):
+	elif message.content.startswith("..gachi"):
 		m = getStageInfo(1)
 		await client.send_message(message.channel, embed=m)
 
@@ -131,7 +131,7 @@ async def on_message(message):
 		m = getStageInfo(2)
 		await client.send_message(message.channel, embed=m)
 
-	elif message.content.startswith(".league_next"):
+	elif message.content.startswith("..league"):
 		m = getStageInfo(3)
 		await client.send_message(message.channel, embed=m)
 
@@ -139,11 +139,11 @@ async def on_message(message):
 		m = getStageInfo(4)
 		await client.send_message(message.channel, embed=m)
 
-	elif message.content.startswith(".nawabari_next"):
+	elif message.content.startswith("..nawabari"):
 		m = getStageInfo(5)
 		await client.send_message(message.channel, embed=m)
 
-	elif message.content.startswith("サモラ"):
+	elif message.content.startswith(".salmon"):
 		headers = {"User-Agent": "IKSbot/1.0(twitter @ikayomech)"}
 		url = "https://spla2.yuu26.com/coop/schedule"
 		response = requests.get(url,headers=headers)
@@ -186,12 +186,12 @@ async def on_message(message):
 		#friend_list 押した人のList
 		frelist = []
 		msg = await client.send_message(message.channel, revmsg)
-
+		finish_msg = '募集終了\n'+ '\n'.join(frelist)
 		#投票の欄
 		await client.add_reaction(msg, '\u21a9')
 		await client.add_reaction(msg, '⏫')
 		await client.add_reaction(msg, '📌')
-		#await client.pin_message(msg)
+		await client.pin_message(msg)
 
 		#serverログ監視
 		botlog = "{} type {}to{}".format(message.author.name,message.content,message.channel.id)
@@ -230,15 +230,15 @@ async def on_message(message):
 						await client.edit_message(msg, text.format(mcount) +'\n'.join(frelist))
 
 				elif target_reaction.reaction.emoji == '📌':
-					await client.edit_message(msg, '募集終了\n'+ '\n'.join(frelist))
-					#await client.unpin_message(msg)
+					await client.edit_message(msg, finish_msg)
+					await client.unpin_message(msg)
 					break
 
-					#await client.remove_reaction(msg, target_reaction.reaction.emoji, target_reaction.user)
+				await client.remove_reaction(msg, target_reaction.reaction.emoji, target_reaction.user)
 					#ユーザーがつけたリアクションを消す※権限によってはエラー
 					#==============================================================
 		else:
-			await client.edit_message(msg, '募集終了\n'+ '\n'.join(frelist))
+			await client.edit_message(msg, finish_msg)
 
 	elif message.content.startswith(".devmsg"):
 		dvls = re.split(' ', message.content)
