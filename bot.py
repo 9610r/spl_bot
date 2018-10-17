@@ -230,8 +230,9 @@ async def on_message(message):
 						await client.edit_message(msg, text.format(mcount) +'\n'.join(frelist))
 
 				elif target_reaction.reaction.emoji == '📌':
-					await client.edit_message(msg, '募集終了\n'+ '\n'.join(frelist))
+					await client.edit_message(msg, '募集終了')
 					await client.unpin_message(msg)
+					await client.send_message(message.channel, m[1]+'に'+ '\n'.join(frelist)+'が集まりました')
 					break
 
 				await client.remove_reaction(msg, target_reaction.reaction.emoji, target_reaction.user)
@@ -240,7 +241,7 @@ async def on_message(message):
 		else:
 			await client.edit_message(msg, '終了')
 			await client.unpin_message(msg)
-			await client.send_message(message.channel, m[1]+'に以下が集まりました\n'+ '\n'.join(frelist))
+			await client.send_message(message.channel, m[1]+'に'+ '\n'.join(frelist)+'が集まりました')
 
 	elif message.content.startswith(".devmsg"):
 		dvls = re.split(' ', message.content)
