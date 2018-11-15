@@ -55,6 +55,30 @@ def randBuki(buki_list, users):
 client = discord.Client()
 with open('buki.csv', encoding='UTF-8') as f:
 	buki_list = f.readlines()
+	
+def randBuki_class(buki_list, users):
+	len_u = len(users)
+	return {i:choice(buki_list) for i in users}
+#clientオブジェクトの生成
+client = discord.Client()
+with open('buki_class.csv', encoding='UTF-8') as f:
+	buki_list = f.readlines()
+
+def randBuki_sub(buki_list, users):
+	len_u = len(users)
+	return {i:choice(buki_list) for i in users}
+#clientオブジェクトの生成
+client = discord.Client()
+with open('subeapon.csv', encoding='UTF-8') as f:
+	buki_list = f.readlines()
+
+def randBuki_sp(buki_list, users):
+	len_u = len(users)
+	return {i:choice(buki_list) for i in users}
+#clientオブジェクトの生成
+client = discord.Client()
+with open('special.csv', encoding='UTF-8') as f:
+	buki_list = f.readlines()
 
 @client.event
 async def on_ready():
@@ -84,7 +108,7 @@ async def on_voice_state_update(before, after):
 async def on_message(message):
 	#"random_buki"とチャットに入力があった場合反応
 	'''ランダム武器'''
-	if message.content.startswith('.random'):
+	if message.content.startswith('.rand'):
 		voice_channel = discord.utils.get(message.server.channels, id=message.author.voice.voice_channel.id)
 		p_list = voice_channel.voice_members
 		voice_users= [ p_list[i].display_name for i in range(len(p_list))]
@@ -93,7 +117,43 @@ async def on_message(message):
 		for i in rand_buki.keys():
 			mbuki =  mbuki + '{}:{}'.format(i,rand_buki[i])
 		msg = discord.Embed(title='ブキを決めるよ',description=mbuki, colour=0xffffff)
-		msg.set_thumbnail(url="https://gashapon.jp/splatoon/images/shoplist/bg_ink_shoplist01.png")
+		msg.set_thumbnail(url="./ink01.png")
+		await client.send_message(message.channel, embed=msg)
+	
+	elif message.content.startswith('.randclass'):
+		voice_channel = discord.utils.get(message.server.channels, id=message.author.voice.voice_channel.id)
+		p_list = voice_channel.voice_members
+		voice_users= [ p_list[i].display_name for i in range(len(p_list))]
+		rand_buki = randBuki_class(buki_list,voice_users)
+		mbuki = ''
+		for i in rand_buki.keys():
+			mbuki =  mbuki + '{}:{}'.format(i,rand_buki[i])
+		msg = discord.Embed(title='ブキの種類を決めるよ',description=mbuki, colour=0xffffff)
+		msg.set_thumbnail(url="./ink01.png")
+		await client.send_message(message.channel, embed=msg)
+		
+	elif message.content.startswith('.randsub'):
+		voice_channel = discord.utils.get(message.server.channels, id=message.author.voice.voice_channel.id)
+		p_list = voice_channel.voice_members
+		voice_users= [ p_list[i].display_name for i in range(len(p_list))]
+		rand_buki = randBuki_sub(buki_list,voice_users)
+		mbuki = ''
+		for i in rand_buki.keys():
+			mbuki =  mbuki + '{}:{}'.format(i,rand_buki[i])
+		msg = discord.Embed(title='サブを決めるよ',description=mbuki, colour=0xffffff)
+		msg.set_thumbnail(url="./ink01.png")
+		await client.send_message(message.channel, embed=msg)
+		
+	elif message.content.startswith('.randsp'):
+		voice_channel = discord.utils.get(message.server.channels, id=message.author.voice.voice_channel.id)
+		p_list = voice_channel.voice_members
+		voice_users= [ p_list[i].display_name for i in range(len(p_list))]
+		rand_buki = randBuki_sp(buki_list,voice_users)
+		mbuki = ''
+		for i in rand_buki.keys():
+			mbuki =  mbuki + '{}:{}'.format(i,rand_buki[i])
+		msg = discord.Embed(title='スペシャルを決めるよ',description=mbuki, colour=0xffffff)
+		msg.set_thumbnail(url="./ink01.png")
 		await client.send_message(message.channel, embed=msg)
 
 	elif message.content.startswith('おはよう'):
@@ -102,7 +162,7 @@ async def on_message(message):
 			m = "おはよう、" + message.author.name + "！"
 			# メッセージが送られてきたチャンネルへメッセージ送信
 			await client.send_message(message.channel, m)
-	elif message.content.startswith('help'):
+	elif message.content.startswith('.help'):
 		# 送り主がBotだった場合反応しない
 		if client.user != message.author:
 			m = "これを見てね！\n" +"https://qiita.com/IkayomeCh/private/5c3ada164e5f2af9d88a"
@@ -176,6 +236,7 @@ async def on_message(message):
 		if client.user != message.author:
 			await client.send_message(message.channel, reply)
 
+	'''
 			"""メンバー募集 (.rect 内容 @数字)"""
 	elif message.content.startswith(".rect"):
 		m = re.split(' ', message.content)
@@ -242,7 +303,7 @@ async def on_message(message):
 			await client.edit_message(msg, '終了')
 			await client.unpin_message(msg)
 			await client.send_message(message.channel, m[1]+'に'+ '\n'.join(frelist)+'が集まりました')
-
+	'''
 	elif message.content.startswith(".devmsg"):
 		dvls = re.split(' ', message.content)
 		targetchan = client.get_channel(dvls[2])
