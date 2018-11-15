@@ -304,10 +304,5 @@ async def on_message(message):
 			await client.unpin_message(msg)
 			await client.send_message(message.channel, m[1]+'に'+ '\n'.join(frelist)+'が集まりました')
 	'''
-	elif message.content.startswith(".devmsg"):
-		dvls = re.split(' ', message.content)
-		targetchan = client.get_channel(dvls[2])
-		dvms = "[管理者メッセージ]"+dvls[1]
-		await client.send_message(targetchan, dvms)
 
 client.run(DISCORD_TOKEN)
