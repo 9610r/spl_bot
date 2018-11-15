@@ -48,37 +48,37 @@ def getStageInfo(index=0):
 		msg.add_field(name="ルール："+dic['rule'], value=dic['maps'][0]+" and "+dic['maps'][1], inline=True)
 		return msg
 
-def randBuki(buki_list, users):
+def randBuki(buki_list1, users):
 	len_u = len(users)
-	return {i:choice(buki_list) for i in users}
+	return {i:choice(buki_list1) for i in users}
 #clientオブジェクトの生成
 client = discord.Client()
 with open('buki.csv', encoding='UTF-8') as f:
-	buki_list = f.readlines()
+	buki_list1 = f.readlines()
 	
-def randBuki_class(buki_list, users):
+def randBuki_class(buki_list2, users):
 	len_u = len(users)
-	return {i:choice(buki_list) for i in users}
+	return {i:choice(buki_list2) for i in users}
 #clientオブジェクトの生成
 client = discord.Client()
 with open('buki_class.csv', encoding='UTF-8') as f:
-	buki_list = f.readlines()
+	buki_list2 = f.readlines()
 
-def randBuki_sub(buki_list, users):
+def randBuki_sub(buki_list3, users):
 	len_u = len(users)
-	return {i:choice(buki_list) for i in users}
+	return {i:choice(buki_list3) for i in users}
 #clientオブジェクトの生成
 client = discord.Client()
 with open('subweapon.csv', encoding='UTF-8') as f:
-	buki_list = f.readlines()
+	buki_list3 = f.readlines()
 
-def randBuki_sp(buki_list, users):
+def randBuki_sp(buki_list4, users):
 	len_u = len(users)
-	return {i:choice(buki_list) for i in users}
+	return {i:choice(buki_list4) for i in users}
 #clientオブジェクトの生成
 client = discord.Client()
 with open('special.csv', encoding='UTF-8') as f:
-	buki_list = f.readlines()
+	buki_list4 = f.readlines()
 
 @client.event
 async def on_ready():
@@ -112,19 +112,19 @@ async def on_message(message):
 		voice_channel = discord.utils.get(message.server.channels, id=message.author.voice.voice_channel.id)
 		p_list = voice_channel.voice_members
 		voice_users= [ p_list[i].display_name for i in range(len(p_list))]
-		rand_buki1 = randBuki(buki_list,voice_users)
+		rand_buki1 = randBuki(buki_list1,voice_users)
 		mbuki1 = ''
 		for i in rand_buki1.keys():
 			mbuki1 =  mbuki1 + '{}:{}'.format(i,rand_buki1[i])
 		msg = discord.Embed(title='ブキを決めるよ',description=mbuki1, colour=0xffffff)
 		#msg.set_thumbnail(url="https://pbs.twimg.com/profile_images/819765217957552132/1WftJJM1_400x400.jpg")
 		await client.send_message(message.channel, embed=msg)
-	
+
 	elif message.content.startswith('.randclass'):
 		voice_channel = discord.utils.get(message.server.channels, id=message.author.voice.voice_channel.id)
 		p_list = voice_channel.voice_members
 		voice_users= [ p_list[i].display_name for i in range(len(p_list))]
-		rand_buki2 = randBuki_class(buki_list,voice_users)
+		rand_buki2 = randBuki_class(buki_list2,voice_users)
 		mbuki2 = ''
 		for i in rand_buki2.keys():
 			mbuki2 =  mbuki2 + '{}:{}'.format(i,rand_buki2[i])
@@ -136,7 +136,7 @@ async def on_message(message):
 		voice_channel = discord.utils.get(message.server.channels, id=message.author.voice.voice_channel.id)
 		p_list = voice_channel.voice_members
 		voice_users= [ p_list[i].display_name for i in range(len(p_list))]
-		rand_buki3 = randBuki_sub(buki_list,voice_users)
+		rand_buki3 = randBuki_sub(buki_list3,voice_users)
 		mbuki3 = ''
 		for i in rand_buki3.keys():
 			mbuki3 =  mbuki3 + '{}:{}'.format(i,rand_buki3[i])
@@ -148,7 +148,7 @@ async def on_message(message):
 		voice_channel = discord.utils.get(message.server.channels, id=message.author.voice.voice_channel.id)
 		p_list = voice_channel.voice_members
 		voice_users= [ p_list[i].display_name for i in range(len(p_list))]
-		rand_buki4 = randBuki_sp(buki_list,voice_users)
+		rand_buki4 = randBuki_sp(buki_list4,voice_users)
 		mbuki = ''
 		for i in rand_buki4.keys():
 			mbuki4 =  mbuki4 + '{}:{}'.format(i,rand_buki4[i])
