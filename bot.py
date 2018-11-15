@@ -165,7 +165,7 @@ async def on_message(message):
 	elif message.content.startswith('.help'):
 		# 送り主がBotだった場合反応しない
 		if client.user != message.author:
-			m = "これを見てね！\n" +"https://qiita.com/IkayomeCh/private/5c3ada164e5f2af9d88a"
+			m = "これを見てね！\n" +"https://qiita.com/IkayomeCh/items/d490fd996d37beee494f"
 			# メッセージが送られてきたチャンネルへメッセージ送信
 			await client.send_message(message.channel, m)
 
