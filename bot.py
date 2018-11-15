@@ -117,7 +117,7 @@ async def on_message(message):
 		for i in rand_buki.keys():
 			mbuki =  mbuki + '{}:{}'.format(i,rand_buki[i])
 		msg = discord.Embed(title='ブキを決めるよ',description=mbuki, colour=0xffffff)
-		msg.set_thumbnail(url="https://pbs.twimg.com/profile_images/819765217957552132/1WftJJM1_400x400.jpg")
+		#msg.set_thumbnail(url="https://pbs.twimg.com/profile_images/819765217957552132/1WftJJM1_400x400.jpg")
 		await client.send_message(message.channel, embed=msg)
 	
 	elif message.content.startswith('.randclass'):
@@ -129,7 +129,7 @@ async def on_message(message):
 		for i in rand_buki.keys():
 			mbuki =  mbuki + '{}:{}'.format(i,rand_buki[i])
 		msg = discord.Embed(title='ブキの種類を決めるよ',description=mbuki, colour=0xffffff)
-		msg.set_thumbnail(url="https://pbs.twimg.com/profile_images/819765217957552132/1WftJJM1_400x400.jpg")
+		#msg.set_thumbnail(url="https://pbs.twimg.com/profile_images/819765217957552132/1WftJJM1_400x400.jpg")
 		await client.send_message(message.channel, embed=msg)
 		
 	elif message.content.startswith('.randsub'):
@@ -141,7 +141,7 @@ async def on_message(message):
 		for i in rand_buki.keys():
 			mbuki =  mbuki + '{}:{}'.format(i,rand_buki[i])
 		msg = discord.Embed(title='サブを決めるよ',description=mbuki, colour=0xffffff)
-		msg.set_thumbnail(url="https://pbs.twimg.com/profile_images/819765217957552132/1WftJJM1_400x400.jpg")
+		#msg.set_thumbnail(url="https://pbs.twimg.com/profile_images/819765217957552132/1WftJJM1_400x400.jpg")
 		await client.send_message(message.channel, embed=msg)
 		
 	elif message.content.startswith('.randsp'):
@@ -153,7 +153,7 @@ async def on_message(message):
 		for i in rand_buki.keys():
 			mbuki =  mbuki + '{}:{}'.format(i,rand_buki[i])
 		msg = discord.Embed(title='スペシャルを決めるよ',description=mbuki, colour=0xffffff)
-		msg.set_thumbnail(url="https://pbs.twimg.com/profile_images/819765217957552132/1WftJJM1_400x400.jpg")
+		#msg.set_thumbnail(url="https://pbs.twimg.com/profile_images/819765217957552132/1WftJJM1_400x400.jpg")
 		await client.send_message(message.channel, embed=msg)
 
 	elif message.content.startswith('おはよう'):
