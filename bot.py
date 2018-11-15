@@ -138,7 +138,7 @@ async def on_message(message):
 		voice_users= [ p_list[i].display_name for i in range(len(p_list))]
 		rand_buki3 = randBuki_sub(buki_list,voice_users)
 		mbuki3 = ''
-		for i in rand_buki.keys():
+		for i in rand_buki3.keys():
 			mbuki3 =  mbuki3 + '{}:{}'.format(i,rand_buki3[i])
 		msg = discord.Embed(title='サブを決めるよ',description=mbuki3, colour=0xffffff)
 		#msg.set_thumbnail(url="https://pbs.twimg.com/profile_images/819765217957552132/1WftJJM1_400x400.jpg")
