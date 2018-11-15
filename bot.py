@@ -112,11 +112,11 @@ async def on_message(message):
 		voice_channel = discord.utils.get(message.server.channels, id=message.author.voice.voice_channel.id)
 		p_list = voice_channel.voice_members
 		voice_users= [ p_list[i].display_name for i in range(len(p_list))]
-		rand_buki = randBuki(buki_list,voice_users)
-		mbuki = ''
-		for i in rand_buki.keys():
-			mbuki =  mbuki + '{}:{}'.format(i,rand_buki[i])
-		msg = discord.Embed(title='ブキを決めるよ',description=mbuki, colour=0xffffff)
+		rand_buki1 = randBuki(buki_list,voice_users)
+		mbuki1 = ''
+		for i in rand_buki1.keys():
+			mbuki1 =  mbuki1 + '{}:{}'.format(i,rand_buki1[i])
+		msg = discord.Embed(title='ブキを決めるよ',description=mbuki1, colour=0xffffff)
 		#msg.set_thumbnail(url="https://pbs.twimg.com/profile_images/819765217957552132/1WftJJM1_400x400.jpg")
 		await client.send_message(message.channel, embed=msg)
 	
@@ -124,11 +124,11 @@ async def on_message(message):
 		voice_channel = discord.utils.get(message.server.channels, id=message.author.voice.voice_channel.id)
 		p_list = voice_channel.voice_members
 		voice_users= [ p_list[i].display_name for i in range(len(p_list))]
-		rand_buki = randBuki_class(buki_list,voice_users)
-		mbuki = ''
-		for i in rand_buki.keys():
-			mbuki =  mbuki + '{}:{}'.format(i,rand_buki[i])
-		msg = discord.Embed(title='ブキの種類を決めるよ',description=mbuki, colour=0xffffff)
+		rand_buki2 = randBuki_class(buki_list,voice_users)
+		mbuki2 = ''
+		for i in rand_buki2.keys():
+			mbuki2 =  mbuki2 + '{}:{}'.format(i,rand_buki2[i])
+		msg = discord.Embed(title='ブキの種類を決めるよ',description=mbuki2, colour=0xffffff)
 		#msg.set_thumbnail(url="https://pbs.twimg.com/profile_images/819765217957552132/1WftJJM1_400x400.jpg")
 		await client.send_message(message.channel, embed=msg)
 		
@@ -136,11 +136,11 @@ async def on_message(message):
 		voice_channel = discord.utils.get(message.server.channels, id=message.author.voice.voice_channel.id)
 		p_list = voice_channel.voice_members
 		voice_users= [ p_list[i].display_name for i in range(len(p_list))]
-		rand_buki = randBuki_sub(buki_list,voice_users)
-		mbuki = ''
+		rand_buki3 = randBuki_sub(buki_list,voice_users)
+		mbuki3 = ''
 		for i in rand_buki.keys():
-			mbuki =  mbuki + '{}:{}'.format(i,rand_buki[i])
-		msg = discord.Embed(title='サブを決めるよ',description=mbuki, colour=0xffffff)
+			mbuki3 =  mbuki3 + '{}:{}'.format(i,rand_buki3[i])
+		msg = discord.Embed(title='サブを決めるよ',description=mbuki3, colour=0xffffff)
 		#msg.set_thumbnail(url="https://pbs.twimg.com/profile_images/819765217957552132/1WftJJM1_400x400.jpg")
 		await client.send_message(message.channel, embed=msg)
 		
@@ -148,11 +148,11 @@ async def on_message(message):
 		voice_channel = discord.utils.get(message.server.channels, id=message.author.voice.voice_channel.id)
 		p_list = voice_channel.voice_members
 		voice_users= [ p_list[i].display_name for i in range(len(p_list))]
-		rand_buki = randBuki_sp(buki_list,voice_users)
+		rand_buki4 = randBuki_sp(buki_list,voice_users)
 		mbuki = ''
-		for i in rand_buki.keys():
-			mbuki =  mbuki + '{}:{}'.format(i,rand_buki[i])
-		msg = discord.Embed(title='スペシャルを決めるよ',description=mbuki, colour=0xffffff)
+		for i in rand_buki4.keys():
+			mbuki4 =  mbuki4 + '{}:{}'.format(i,rand_buki4[i])
+		msg = discord.Embed(title='スペシャルを決めるよ',description=mbuki4, colour=0xffffff)
 		#msg.set_thumbnail(url="https://pbs.twimg.com/profile_images/819765217957552132/1WftJJM1_400x400.jpg")
 		await client.send_message(message.channel, embed=msg)
 
