@@ -69,7 +69,7 @@ def randBuki_sub(buki_list, users):
 	return {i:choice(buki_list) for i in users}
 #clientオブジェクトの生成
 client = discord.Client()
-with open('subeapon.csv', encoding='UTF-8') as f:
+with open('subweapon.csv', encoding='UTF-8') as f:
 	buki_list = f.readlines()
 
 def randBuki_sp(buki_list, users):
