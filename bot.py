@@ -149,7 +149,7 @@ async def on_message(message):
 		p_list = voice_channel.voice_members
 		voice_users= [ p_list[i].display_name for i in range(len(p_list))]
 		rand_buki4 = randBuki_sp(buki_list4,voice_users)
-		mbuki = ''
+		mbuki4 = ''
 		for i in rand_buki4.keys():
 			mbuki4 =  mbuki4 + '{}:{}'.format(i,rand_buki4[i])
 		msg = discord.Embed(title='スペシャルを決めるよ',description=mbuki4, colour=0xffffff)
