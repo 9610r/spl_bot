@@ -55,7 +55,7 @@ def randBuki(buki_list1, users):
 client = discord.Client()
 with open('buki.csv', encoding='UTF-8') as f:
 	buki_list1 = f.readlines()
-	
+
 def randBuki_class(buki_list2, users):
 	len_u = len(users)
 	return {i:choice(buki_list2) for i in users}
@@ -79,6 +79,13 @@ def randBuki_sp(buki_list4, users):
 client = discord.Client()
 with open('special.csv', encoding='UTF-8') as f:
 	buki_list4 = f.readlines()
+
+def rand_Stage():
+	with open('stage.csv', encoding='UTF-8') as f:
+		stage_list = f.readlines()
+		stage_list = choice(stage_list)
+		return stage_list
+
 
 @client.event
 async def on_ready():
@@ -108,15 +115,16 @@ async def on_voice_state_update(before, after):
 async def on_message(message):
 	#"random_buki"とチャットに入力があった場合反応
 	'''ランダム武器'''
-	if message.content.startswith('.randb'):
+	if message.content.startswith('.random'):
 		voice_channel = discord.utils.get(message.server.channels, id=message.author.voice.voice_channel.id)
 		p_list = voice_channel.voice_members
 		voice_users= [ p_list[i].display_name for i in range(len(p_list))]
 		rand_buki1 = randBuki(buki_list1,voice_users)
 		mbuki1 = ''
+		stage = "ステージ："rand_Stage()
 		for i in rand_buki1.keys():
-			mbuki1 =  mbuki1 + '{}:{}'.format(i,rand_buki1[i])
-		msg = discord.Embed(title='ブキを決めるよ',description=mbuki1, colour=0xffffff)
+			mbuki1 =  mbuki1 + '{}: {}'.format(i,rand_buki1[i])
+		msg = discord.Embed(title=stage,description=mbuki1, colour=0xffffff)
 		#msg.set_thumbnail(url="https://pbs.twimg.com/profile_images/819765217957552132/1WftJJM1_400x400.jpg")
 		await client.send_message(message.channel, embed=msg)
 
@@ -131,7 +139,7 @@ async def on_message(message):
 		msg = discord.Embed(title='ブキの種類を決めるよ',description=mbuki2, colour=0xffffff)
 		#msg.set_thumbnail(url="https://pbs.twimg.com/profile_images/819765217957552132/1WftJJM1_400x400.jpg")
 		await client.send_message(message.channel, embed=msg)
-		
+
 	elif message.content.startswith('.randsub'):
 		voice_channel = discord.utils.get(message.server.channels, id=message.author.voice.voice_channel.id)
 		p_list = voice_channel.voice_members
@@ -143,7 +151,7 @@ async def on_message(message):
 		msg = discord.Embed(title='サブを決めるよ',description=mbuki3, colour=0xffffff)
 		#msg.set_thumbnail(url="https://pbs.twimg.com/profile_images/819765217957552132/1WftJJM1_400x400.jpg")
 		await client.send_message(message.channel, embed=msg)
-		
+
 	elif message.content.startswith('.randsp'):
 		voice_channel = discord.utils.get(message.server.channels, id=message.author.voice.voice_channel.id)
 		p_list = voice_channel.voice_members
