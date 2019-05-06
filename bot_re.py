@@ -1,0 +1,223 @@
+#-*- -*- -*- -*- -*- -*- -*- -*- coding:UTF-8 -*- -*- -*- -*- -*- -*- -*- -*- -
+import json
+import discord
+#v1.0
+import requests
+import re
+from random import randint,choice
+import datetime
+import os
+#-*- -*- -*- -*- -*- -*- -*- -*- -*- -*- -*- -*- -*- -*- -*- -*- -*- -*- -*- -*
+
+DISCORD_TOKEN = os.environ["DISCORD_TOKEN"]
+#LOG_CHANNEL_ID = os.environ["LOG_CHANNEL_ID"]
+#LOOK_SERVER_ID = os.environ["LOOK_SERVER_ID"]
+RECT_CHANNEL_ID = os.environ["RECT_CHANNEL_ID"]
+
+def getStageInfo(index=0):
+	'''ステージ情報'''
+	links = (
+				'gachi/now','gachi/next',
+				'league/now','league/next',
+				'regular/now','regular/next',
+				'coop/schedule'
+			)
+
+	headers = {"User-Agent": "IKSbot/1.0(twitter @ikayomech)"}
+
+	#now or next
+	url = "https://spla2.yuu26.com/" + links[index]
+	response = requests.get(url,headers=headers)
+	dic = json.loads(response.text)
+	dic = dic['result'][0]
+
+	if index < 2:
+		msg = discord.Embed(title='ガチマッチ',colour=0xfbb31c)
+		msg.set_thumbnail(url="https://img.game8.jp/1624573/ba4f5f835f2f94ca431b7c11173e43db.png/show?1526527610")
+		msg.add_field(name="ルール："+dic['rule'], value=dic['maps'][0]+" and "+dic['maps'][1], inline=True)
+		return msg
+
+	elif index < 4:
+		msg = discord.Embed(title='リーグマッチ',colour=0xff00ff)
+		msg.set_thumbnail(url="https://img.game8.jp/1624587/c4a871db639f4c8a809639b6a8cda050.png/show?1526527769")
+		msg.add_field(name="ルール："+dic['rule'], value=dic['maps'][0]+" and "+dic['maps'][1], inline=True)
+		return msg
+
+	elif index < 6:
+		msg = discord.Embed(title='ナワバリ',colour=0xadff2f)
+		msg.set_thumbnail(url="https://img.game8.jp/1624580/4a48b2bf985a9b5e79b78bdc7753f8b3.png/show?1526527741")
+		msg.add_field(name="ルール："+dic['rule'], value=dic['maps'][0]+" and "+dic['maps'][1], inline=True)
+		return msg
+
+def randBuki(buki_list1, users):
+	len_u = len(users)
+	return {i:choice(buki_list1) for i in users}
+#clientオブジェクトの生成
+client = discord.Client()
+with open('buki.csv', encoding='UTF-8') as f:
+	buki_list1 = f.readlines()
+
+def randBuki_class(buki_list2, users):
+	len_u = len(users)
+	return {i:choice(buki_list2) for i in users}
+#clientオブジェクトの生成
+client = discord.Client()
+with open('buki_class.csv', encoding='UTF-8') as f:
+	buki_list2 = f.readlines()
+
+def randBuki_sub(buki_list3, users):
+	len_u = len(users)
+	return {i:choice(buki_list3) for i in users}
+#clientオブジェクトの生成
+client = discord.Client()
+with open('subweapon.csv', encoding='UTF-8') as f:
+	buki_list3 = f.readlines()
+
+def randBuki_sp(buki_list4, users):
+	len_u = len(users)
+	return {i:choice(buki_list4) for i in users}
+#clientオブジェクトの生成
+client = discord.Client()
+with open('special.csv', encoding='UTF-8') as f:
+	buki_list4 = f.readlines()
+
+def rand_Stage():
+	with open('stage.csv', encoding='UTF-8') as f:
+		stage_list = f.readlines()
+		stage_list = choice(stage_list)
+		return stage_list
+
+
+@client.event
+async def on_ready():
+	print('Logged in as')
+	print(client.user.name)
+	print(client.user.id)
+	await client.change_presence(game=discord.Game(name="Splatoon2"))
+	print('------')
+
+
+@client.event
+async def on_message(message):
+    if message.content.startswith('test'):
+        await message.channel.send('Hello')
+	#"random_buki"とチャットに入力があった場合反応
+	'''ランダム武器'''
+	if message.content.startswith('.random'):
+		voice_channel = discord.utils.get(message.server.channels, id=message.author.voice.voice_channel.id)
+		p_list = voice_channel.voice_members
+		voice_users= [ p_list[i].display_name for i in range(len(p_list))]
+		rand_buki1 = randBuki(buki_list1,voice_users)
+		mbuki1 = ''
+		stage = "ステージ："rand_Stage()
+		for i in rand_buki1.keys():
+			mbuki1 =  mbuki1 + '{}: {}'.format(i,rand_buki1[i])
+		msg = discord.Embed(title=stage,description=mbuki1, colour=0xffffff)
+		#msg.set_thumbnail(url="https://pbs.twimg.com/profile_images/819765217957552132/1WftJJM1_400x400.jpg")
+		await message.channel.send(embed=msg)
+
+	elif message.content.startswith('.randclass'):
+		voice_channel = discord.utils.get(message.server.channels, id=message.author.voice.voice_channel.id)
+		p_list = voice_channel.voice_members
+		voice_users= [ p_list[i].display_name for i in range(len(p_list))]
+		rand_buki2 = randBuki_class(buki_list2,voice_users)
+		mbuki2 = ''
+		for i in rand_buki2.keys():
+			mbuki2 =  mbuki2 + '{}:{}'.format(i,rand_buki2[i])
+		msg = discord.Embed(title='ブキの種類を決めるよ',description=mbuki2, colour=0xffffff)
+		#msg.set_thumbnail(url="https://pbs.twimg.com/profile_images/819765217957552132/1WftJJM1_400x400.jpg")
+		await message.channel.send(embed=msg)
+
+	elif message.content.startswith('.randsub'):
+		voice_channel = discord.utils.get(message.server.channels, id=message.author.voice.voice_channel.id)
+		p_list = voice_channel.voice_members
+		voice_users= [ p_list[i].display_name for i in range(len(p_list))]
+		rand_buki3 = randBuki_sub(buki_list3,voice_users)
+		mbuki3 = ''
+		for i in rand_buki3.keys():
+			mbuki3 =  mbuki3 + '{}:{}'.format(i,rand_buki3[i])
+		msg = discord.Embed(title='サブを決めるよ',description=mbuki3, colour=0xffffff)
+		#msg.set_thumbnail(url="https://pbs.twimg.com/profile_images/819765217957552132/1WftJJM1_400x400.jpg")
+		await message.channel.send(embed=msg)
+
+	elif message.content.startswith('.randsp'):
+		voice_channel = discord.utils.get(message.server.channels, id=message.author.voice.voice_channel.id)
+		p_list = voice_channel.voice_members
+		voice_users= [ p_list[i].display_name for i in range(len(p_list))]
+		rand_buki4 = randBuki_sp(buki_list4,voice_users)
+		mbuki4 = ''
+		for i in rand_buki4.keys():
+			mbuki4 =  mbuki4 + '{}:{}'.format(i,rand_buki4[i])
+		msg = discord.Embed(title='スペシャルを決めるよ',description=mbuki4, colour=0xffffff)
+		#msg.set_thumbnail(url="https://pbs.twimg.com/profile_images/819765217957552132/1WftJJM1_400x400.jpg")
+		await message.channel.send(embed=msg)
+
+	elif message.content.startswith('.help'):
+		# 送り主がBotだった場合反応しない
+		if client.user != message.author:
+			m = "これを見てね！\n" +"https://qiita.com/IkayomeCh/items/d490fd996d37beee494f"
+			# メッセージが送られてきたチャンネルへメッセージ送信
+			await message.channel.send( m)
+
+	elif message.content.startswith("サイコロ"):
+		saikoro_choice = choice(['1','2','3','4','5','6'])
+		if client.user != message.author:
+			# メッセージを書きます
+			m = saikoro_choice
+			await message.channel.send(,'{} {}'.format(message.author.mention,m))
+
+	elif client.user.id in message.content:
+		await message.channel.send( '{} 呼んだか？'.format(message.author.mention))
+
+	elif message.content.startswith('.gachi'):
+		m = getStageInfo(0)
+		await message.channel.send( embed=m)
+
+	elif message.content.startswith("..gachi"):
+		m = getStageInfo(1)
+		await message.channel.send( embed=m)
+
+	elif message.content.startswith(".league"):
+		m = getStageInfo(2)
+		await message.channel.send( embed=m)
+
+	elif message.content.startswith("..league"):
+		m = getStageInfo(3)
+		await message.channel.send( embed=m)
+
+	elif message.content.startswith(".nawabari"):
+		m = getStageInfo(4)
+		await message.channel.send( embed=m)
+
+	elif message.content.startswith("..nawabari"):
+		m = getStageInfo(5)
+		await message.channel.send( embed=m)
+
+	elif message.content.startswith(".salmon"):
+		headers = {"User-Agent": "IKSbot/1.0(twitter @ikayomech)"}
+		url = "https://spla2.yuu26.com/coop/schedule"
+		response = requests.get(url,headers=headers)
+		dic = json.loads(response.text)
+		dic = dic['result'][0]
+
+		time_st,time_ed = dic['start'],dic['end']
+		time_st = time_st.replace('T',' ')[5:16]
+		time_stc = time_st.replace('-',' ').replace(':',' ').replace(' ','')
+		time_ed = time_ed.replace('T',' ')[5:16]
+		time_edc = time_ed.replace('-',' ').replace(':',' ').replace(' ','')
+		time = time_st.replace('-','/')+"～"+time_ed.replace('-','/')
+		nowtime = datetime.datetime.now().strftime("%m%d%H%M")
+		if time_stc < nowtime < time_edc:
+			nowinfo = "≪開催中！!≫"
+		else:
+			nowinfo = "≪シフト予定≫"
+	    msg = discord.Embed(title='サーモンラン '+nowinfo, description=time,colour=0xFB7E00)
+		msg.set_thumbnail(url=dic['stage']['image'])
+		msg.add_field(name=dic['stage']['name'],value=dic['weapons'][0]['name']+'\n'+dic['weapons'][1]['name']+'\n'+dic['weapons'][2]['name']+'\n'+dic['weapons'][3]['name'], inline=True)
+		await message.channel.send(embed=msg)
+
+    await client.process_commands(message)
+    #Erorr回避
+
+
+client.run(DISCORD_TOKEN)
